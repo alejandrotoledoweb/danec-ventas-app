@@ -45,7 +45,11 @@ function App() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const newSubmission = { ...formData, signature: signatureData };
+    const newSubmission = {
+      ...formData,
+      signature: signatureData,
+      image: imagePreview,
+    };
     setSubmissions([...submissions, newSubmission]);
 
     // Clear the form and previews
@@ -270,18 +274,22 @@ function App() {
         <ul className="bg-gray-100 p-4 rounded text-black text-left">
           {submissions.map((submission, index) => (
             <li key={index} className="mb-2 p-2 border-b border-gray-300">
-              <span className="block font-bold">Venta: {index + 1}</span>
+              <span className="block font-bold text-lg">
+                Venta: {index + 1}
+              </span>
               Código del vendedor: {submission.sellerCode},<br /> Código del
               cliente: {submission.clientCode}, <br /> Marca: {submission.marca}
               , <br />
               Actividad: {submission.activity}
-              <div className="flex justy">
-                <img
-                  src={submission.signature as string}
-                  alt="Signature"
-                  className="w-32 pt-2"
-                />
-              </div>
+              {submission.image && (
+                <div className="flex justify-center">
+                  <img
+                    src={submission.image as string}
+                    alt="Uploaded"
+                    className="w-32 h-auto"
+                  />
+                </div>
+              )}
             </li>
           ))}
         </ul>
